@@ -12,9 +12,6 @@ namespace Repository.Repository
             throw new NotImplementedException();
         }
 
-        public List<Veiculo> GetVeiculos()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Veiculo> GetVeiculos() => new List<Veiculo>();
     }
 }

@@ -1,17 +1,22 @@
 using GraphQL.Types;
-using GraphQLObjects.Type;
+using Graph.Type;
 using Repository.IRepository;
 
-namespace GraphQLObjects.Query
+namespace Graph.Query
 {
     public class AppQuery : ObjectGraphType
     {
-        public AppQuery(IVeiculoRepository veiculoRepository) 
+        public AppQuery(IVeiculoRepository veiculoRepository, ICondutorRepository condutorRepository) 
         {
             _ = Field<ListGraphType<VeiculoType>>(
-              "Veiculos",
-              resolve: context => veiculoRepository.GetVeiculos()
-          );
+                    "veiculos",
+                    resolve: context => veiculoRepository.GetVeiculos()
+                );
+            _ = Field<ListGraphType<CondutorType>>(
+                    "condutores",
+                    resolve: context => condutorRepository.GetCondutores()
+                );
+
         }
     }
 }
