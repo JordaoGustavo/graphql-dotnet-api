@@ -1,7 +1,7 @@
 using Model.Model;
 using GraphQL.Types;
 
-namespace GraphQLObjects.Type
+namespace Graph.Type
 {
     public class VeiculoType : ObjectGraphType<Veiculo>
     {
