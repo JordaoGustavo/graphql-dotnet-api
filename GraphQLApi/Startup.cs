@@ -1,4 +1,6 @@
+using Graph.Query;
 using Graph.Scheme;
+using Graph.Type;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repository.IRepository;
+using Repository.Repository;
 
 namespace GraphQLApi
 {
@@ -20,33 +23,33 @@ namespace GraphQLApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            _ = services.AddControllers();
-
-            _ = services.AddSingleton<IVeiculoRepository>();
-            _ = services.AddSingleton<ICondutorRepository>();
-
-            _ = services.AddScoped<AppScheme>();
-            _ = services.AddScoped<IDependencyResolver>(s =>
-                        new FuncDependencyResolver(s.GetRequiredService));
-            _ = services.AddGraphQL(o => o.ExposeExceptions = false).AddGraphTypes(ServiceLifetime.Scoped);
+            _ = services.AddSingleton<IVeiculoRepository, VeiculoRepository>()
+                        .AddSingleton<ICondutorRepository, CondutorRepository>()
+                        .AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService))
+                        .AddSingleton<VeiculoQuery>()
+                        .AddSingleton<AppScheme>()
+                        .AddSingleton<VeiculoType>()
+                        .AddSingleton<CondutorType>()
+                        .AddAuthorization();
+            _ = services.AddGraphQL(o => o.ExposeExceptions = true).AddGraphTypes(ServiceLifetime.Singleton);
+            _ = services.Configure<IISServerOptions>(o => o.AllowSynchronousIO = true);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 _ = app.UseDeveloperExceptionPage();
             }
+
             _ = app.UseHttpsRedirection()
-                   .UseRouting()
-                   .UseAuthorization()
-                   .UseEndpoints(endpoints => endpoints.MapControllers())
-                   .UseGraphQL<AppScheme>()
-                   .UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+                .UseRouting()
+                .UseAuthorization();
+
+            _ = app.UseGraphQL<AppScheme>()
+                   .UseGraphQLPlayground(new GraphQLPlaygroundOptions());
         }
     }
 }
