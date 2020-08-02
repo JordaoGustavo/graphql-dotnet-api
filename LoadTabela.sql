@@ -5,7 +5,7 @@ GETDATE() AS AnoFabricacao, 100 AS Hodomedro
 
 SELECT * from Veiculo
 
-INSERT INTO Condutor SELECT 'Gustavo' AS Nome, 'Jordão' AS SobreNome, 
-'2001-03-10' AS DataNascimento, 1 AS VeiculoId
+INSERT INTO Condutor SELECT 'Teste' AS Nome, 'Condutor' AS SobreNome, 
+'2001-09-10' AS DataNascimento, 1 AS VeiculoId
 
 SELECT * From Condutor
