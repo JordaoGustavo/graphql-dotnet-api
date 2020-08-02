@@ -13,10 +13,14 @@ namespace Graph.Type
                 .Description("Nome do Condutor");
             _ = Field(v => v.SobreNome)
                 .Description("Sobrenome do Condutor");
-            _ = Field(v => v.Idade)
-                .Description("Idade do Condutor");
-            _ = Field(v => v.VeiculoId)
-                .Description("Vinculo com o veiculo");
+            _ = Field(v => v.DataNascimento)
+                .Description("Data Nascimento");
+            _ = Field(
+                    name: "Veiculo",
+                    type: typeof(VeiculoType),
+                    resolve: context => context.Source.Veiculo,
+                    description: "Veiculo"
+                );
         }
     }
 }

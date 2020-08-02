@@ -5,7 +5,8 @@ namespace Repository.IRepository
 {
     public interface IVeiculoRepository
     {
-        List<Veiculo> GetVeiculos();
+        IEnumerable<Veiculo> Get();
         Veiculo Get(int id);
+        IEnumerable<Veiculo> Get(IEnumerable<int> veiculosId);
     }
 }

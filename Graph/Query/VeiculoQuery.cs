@@ -1,5 +1,5 @@
-using GraphQL.Types;
 using Graph.Type;
+using GraphQL.Types;
 using Repository.IRepository;
 
 namespace Graph.Query
@@ -10,7 +10,7 @@ namespace Graph.Query
         {
             _ = Field<ListGraphType<VeiculoType>>(
                     "veiculos",
-                    resolve: context => veiculoRepository.GetVeiculos()
+                    resolve: context => veiculoRepository.Get()
                 );
         }
     }

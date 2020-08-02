@@ -8,7 +8,7 @@ namespace Graph.Scheme
     {
         public AppScheme(IDependencyResolver resolver) : base(resolver)
         {
-            Query = resolver.Resolve<VeiculoQuery>();
+            Query = resolver.Resolve<CondutorQuery>();
         }
     }
 }
