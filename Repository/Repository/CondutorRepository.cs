@@ -1,5 +1,7 @@
-using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using Dapper;
 using Model.Model;
 using Repository.IRepository;
 
@@ -9,12 +11,38 @@ namespace Repository.Repository
     {
         public Condutor Get(int id)
         {
-            throw new NotImplementedException();
+            string query = @" SELECT
+		                            c.CondutorId
+	                            ,	c.Nome
+	                            ,	c.SobreNome
+	                            ,	c.DataNascimento
+	                            ,	c.VeiculoId
+                                FROM Condutor c
+                                WHERE
+                                    c.CondutorId = @id
+                            ";
+
+            using (var connection = ConnectionFactory.CreateConnection("Desenvolvimento", ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString.ToString()))
+            {
+                return connection.Query<Condutor>(query, id).FirstOrDefault();
+            }
         }
 
-        public List<Condutor> GetCondutores()
+        public IEnumerable<Condutor> Get()
         {
-            throw new NotImplementedException();
+            string query = @" SELECT
+		                            c.CondutorId
+	                            ,	c.Nome
+	                            ,	c.SobreNome
+	                            ,	c.DataNascimento
+	                            ,	c.VeiculoId
+                                FROM Condutor c
+                            ";
+
+            using (var connection = ConnectionFactory.CreateConnection("Desenvolvimento", ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString.ToString()))
+            {
+                return connection.Query<Condutor>(query);
+            }
         }
     }
 }

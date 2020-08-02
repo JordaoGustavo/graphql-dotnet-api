@@ -1,0 +1,27 @@
+
+CREATE DATABASE Desenvolvimento
+
+USE Desenvolvimento
+
+
+CREATE TABLE Veiculo (
+	VeiculoId INT IDENTITY(1,1) PRIMARY KEY,
+	Modelo VARCHAR(50) NOT NULL,
+	Cor VARCHAR(50) NOT NULL,
+	AnoFabricacao DATETIME NOT NULL,
+	Hodometro INT NOT NULL
+)
+
+
+CREATE TABLE Condutor (
+	CondutorId INT IDENTITY(1,1) PRIMARY KEY,
+	Nome VARCHAR(50) NOT NULL,
+	SobreNome VARCHAR(50) NOT NULL,
+	DataNascimento DATETIME NOT NULL,
+	VeiculoId INT NOT NULL,
+	FOREIGN KEY (VeiculoId) REFERENCES Veiculo(VeiculoId)
+)
+
+CREATE TYPE GenericTvp AS TABLE (
+	ID INT NOT NULL
+)

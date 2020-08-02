@@ -29,6 +29,7 @@ namespace GraphQLApi
                         .AddSingleton<ICondutorRepository, CondutorRepository>()
                         .AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService))
                         .AddSingleton<VeiculoQuery>()
+                        .AddSingleton<CondutorQuery>()
                         .AddSingleton<AppScheme>()
                         .AddSingleton<VeiculoType>()
                         .AddSingleton<CondutorType>()

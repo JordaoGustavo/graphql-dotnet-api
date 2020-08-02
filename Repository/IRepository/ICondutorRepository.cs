@@ -5,7 +5,7 @@ namespace Repository.IRepository
 {
     public interface ICondutorRepository
     {
-        List<Condutor> GetCondutores();
+        IEnumerable<Condutor> Get();
         Condutor Get(int id);
     }
 }
